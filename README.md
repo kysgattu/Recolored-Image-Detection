@@ -38,11 +38,29 @@
 ## System Modules <a name='model'></a>
 
 > ### Training the System <a name='training'></a>
+
 #### Collection of picture Data <a name='data-collection'></a>
+- The training set is an essential component of the network. We use the VOC PASCAL  dataset which contains  images including both indoor and outdoor photographs. Since edit propagation and palette based recoloring methods require artiﬁcial manipulation and are inappropriate for generating a large number of training data, we only use the example-based recoloring methods to generate training data.
+- As our recoloring detection is a binary classiﬁcation task, we need a balance between the positive and negative examples in training data. In this work, given an original photograph I, we randomly select one recoloring method to generate the recolored image. Therefore, the ratio between the positive and negative examples is 1, which is the most appropriate for binary classiﬁcation using the neural network.
+
+
 #### Picture information extraction <a name='extraction'></a>
+- Here we extract the features of each input. In this section, we analyze the relations between recoloring performance and factors like different input branches and illuminant estimation algorithms.
+- We take DI(Difference Image)s and IM(Illumination Module) as two pieces of evidence of image recolored detection based on the observations that images may not maintain the inter-channel correlation or illuminant consistency after the recoloring process. These two pieces of evidence are employed as two additional input branches together with the original image.
+
+
 #### Concatenation & Fusion <a name='confus'></a>
 
+- In this step, we concatenate features of three inputs at different layers of the color and perform the comparison of the factor of comparison between each layer by using Illumination estimation algorithms
+- We perform the comparison for more number of layers and color shades to improve the accuracy of the system.
+- This step is performed multiple times until the comparison factor is steady or unchanged for two consecutive iterations.
+
+
 > ### Testing the System <a name='testing'></a>
+
+- Since color transferring methods have been widely used in human society, we further collect a new dataset that contains 80 recolored photos which are performed manually. Some of the photographs are produced by mobile APPs while others are downloaded from the websites such as Photoshop tutorial websites. All the downloaded images are mentioned that they are recolored. Some examples randomly selected from our dataset.
+- Now the dataset is subjected to the trained system to check the accuracy of the system.
+
 
 
 ## Developer <a name='developers'></a>
