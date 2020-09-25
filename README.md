@@ -7,12 +7,15 @@
   
 ## Table of contents
 
-- [Installation](#installation)
-    - [Prerequisites](#prerequisites)
+- [Prerequisites](#prerequisites)
+    - [Environment](#environment)
     - [Technologies Used](#technologies-used)
+    - [Dataset Description](#dataset-description)
+- [System Architecture](#architecture) 
 - [System Modules](#modules)
     - [Training the System](#training)
         - [Collection of picture Data](#data-collection)
+        - [Creation of Dataset using Color Transfer Techniques](#dataset-creation)
         - [Picture information extraction](#extraction)
         - [Concatenation & Fusion](#confus)
     - [Testing the System](#testing)
@@ -21,19 +24,41 @@
 - [References](#references)
     
     
-## Installation <a name='installation'></a>
 
-### Prerequisites <a name='prerequisites'></a>
+## Prerequisites <a name='prerequisites'></a>
+
+### Environment <a name='environment'></a>
 
 1. Python 3 Environment (Ancaonda preferred)
 2. Python modules required:NumPy,Pandas,Opencv2,Matplotlib, Scikit-learn, Keras
 3. Web Browser
 
+OR
+- Any Python3 IDE installed with above modules.
+
+
 ### Technologies Used <a name='technologies-used'></a>
 
 1. Anaconda Jupyter Notebook
 
+### Dataset Description <a name='dataset-description'></a>
 
+#### VOC PASCAL 2012
+	
+  VOC PASCAL is a challenge conductor based on data analysis on images. It provides standardised image data sets for object class recognition. It provides a common set of tools for accessing the data sets and annotations. Enables evaluation and comparison of different methods. It runs challenges evaluating performance on object class recognition. It provides a data set of images of various types like persons, animals, birds, vehicles, trees, objects in both outdoor and indoor environment.
+	The training data provided consists of a set of images; each image has an annotation file giving a bounding box and object class label for each object in one of the twenty classes present in the image. Note that multiple objects from multiple classes may be present in the same image. Annotation was performed according to a set of guidelines distributed to all annotators. A subset of images are also annotated with pixel-wise segmentation of each object present, to support the segmentation competition. Images for the action classification task are disjoint from those of the classification/detection/segmentation tasks. They have been partially annotated with people, bounding boxes, reference points and their actions. Annotation was performed according to a set of guidelines distributed to all annotators. Images for the person layout taster, where the test set is disjoint from the main tasks, have been additionally annotated with parts of the people (head/hands/feet).
+  We use few images from this dataset to train the system by applying Recoloring Algorithms and Color Transfer algorithms to create a synthetic dataset. Since edit propagation and palette based recoloring methods require artiﬁcial manipulation and are inappropriate for generating a large number of training data, only example-based recoloring methods are used to generate training data.
+
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Dataset%20Sample.png)
+
+
+## System Architecture <a name='architecture'></a>
+> ### Architecture of the model
+
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Model%20Architecture.jpg)
+
+> ### Architecture of Training System
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Network%20Architecture.jpg)
 
 ## System Modules <a name='model'></a>
 
@@ -44,6 +69,12 @@
 - As our recoloring detection is a binary classiﬁcation task, we need a balance between the positive and negative examples in training data. In this work, given an original photograph I, we randomly select one recoloring method to generate the recolored image. Therefore, the ratio between the positive and negative examples is 1, which is the most appropriate for binary classiﬁcation using the neural network.
 
 
+### Creation of Dataset using Color Transfer Techniques <a name='dataset-preparation'></a>
+- We divide the above collected images into two folders so as to create a set of recolored images by transferring the color properties of each image in the first folder to each image in the second folder using below explained color transfer algorithm and create a dataset of images containing collection of both source and transfer images. 
+- We apply  color transfer algorithm on the images in the collected dataset to create a training dataset containing both recolored images, original images but named with different names for images of each class, so that model can distinguish between the classes (we use supervised learning for training the system).
+
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Color%20Transfer%20Sample.jpg)
+
 #### Picture information extraction <a name='extraction'></a>
 - Here we extract the features of each input. In this section, we analyze the relations between recoloring performance and factors like different input branches and illuminant estimation algorithms.
 - We take DI(Difference Image)s and IM(Illumination Module) as two pieces of evidence of image recolored detection based on the observations that images may not maintain the inter-channel correlation or illuminant consistency after the recoloring process. These two pieces of evidence are employed as two additional input branches together with the original image.
@@ -53,15 +84,19 @@
 
 - In this step, we concatenate features of three inputs at different layers of the color and perform the comparison of the factor of comparison between each layer by using Illumination estimation algorithms
 - We perform the comparison for more number of layers and color shades to improve the accuracy of the system.
+- The training of the system is done in multiple epochs for accuracy of the system.
 - This step is performed multiple times until the comparison factor is steady or unchanged for two consecutive iterations.
 
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Epoch%20Graph.png)
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Model%20Fitting.jpg)
 
 > ### Testing the System <a name='testing'></a>
 
 - Since color transferring methods have been widely used in human society, we further collect a new dataset that contains 80 recolored photos which are performed manually. Some of the photographs are produced by mobile APPs while others are downloaded from the websites such as Photoshop tutorial websites. All the downloaded images are mentioned that they are recolored. Some examples randomly selected from our dataset.
 - Now the dataset is subjected to the trained system to check the accuracy of the system.
 
-
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Test%20Result%20Pictorial.jpg)
+![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Test%20Result%20Tabular.png)
 
 ## Developer <a name='developers'></a>
 * Kamal Yeshodhar Shastry Gattu
@@ -70,7 +105,7 @@
 
 GitHub:     [G K Y SHASTRY](https://github.com/kysgattu)
 
-Contact me:     <gkyshastry0502@gmail.com>
+Contact me:     <gkyshastry0502@gmail.com> , <kysgattu0502@gmail.com>
 
 ## References <a name='references'></a>
 [[1] Yanyang Yan, Wenqi Ren, Xiaochun Cao, “Recolored Image Detection via a Deep Discriminative Model,” IEEE Transactions On Information Forensics And Security, Vol. XX, No. X, July 2017
