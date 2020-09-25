@@ -15,7 +15,7 @@
 - [System Modules](#modules)
     - [Training the System](#training)
         - [Collection of picture Data](#data-collection)
-        - [Creation of Dataset using Color Transfer Techniques](#dataset-creation)
+        - [Creation of Dataset using Color Transfer Techniques](#dataset-preparation)
         - [Picture information extraction](#extraction)
         - [Concatenation & Fusion](#confus)
     - [Testing the System](#testing)
@@ -60,7 +60,7 @@ OR
 > ### Architecture of Training System
 ![alt tag](https://github.com/kysgattu/Recolored-Image-Detection/blob/master/Project-Screenshots/Network%20Architecture.jpg)
 
-## System Modules <a name='model'></a>
+## System Modules <a name='modules'></a>
 
 > ### Training the System <a name='training'></a>
 
@@ -69,7 +69,7 @@ OR
 - As our recoloring detection is a binary classiﬁcation task, we need a balance between the positive and negative examples in training data. In this work, given an original photograph I, we randomly select one recoloring method to generate the recolored image. Therefore, the ratio between the positive and negative examples is 1, which is the most appropriate for binary classiﬁcation using the neural network.
 
 
-### Creation of Dataset using Color Transfer Techniques <a name='dataset-preparation'></a>
+#### Creation of Dataset using Color Transfer Techniques <a name='dataset-preparation'></a>
 - We divide the above collected images into two folders so as to create a set of recolored images by transferring the color properties of each image in the first folder to each image in the second folder using below explained color transfer algorithm and create a dataset of images containing collection of both source and transfer images. 
 - We apply  color transfer algorithm on the images in the collected dataset to create a training dataset containing both recolored images, original images but named with different names for images of each class, so that model can distinguish between the classes (we use supervised learning for training the system).
 
